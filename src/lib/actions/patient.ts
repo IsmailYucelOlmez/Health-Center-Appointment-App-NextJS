@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { ID, InputFile, Query } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 
 import {
-  BUCKET_ID,
   DATABASE_ID,
-  ENDPOINT,
   PATIENT_COLLECTION_ID,
-  PROJECT_ID,
+  //PROJECT_ID,
   databases,
-  storage,
+  //storage,
   users,
 } from "../appwrite.config";
 
@@ -37,5 +35,34 @@ export const createUser = async (user: CreateUserParams) => {
       return existingUser.users[0];
     }
     console.error("An error occurred while creating a new user:", error);
+  }
+};
+
+export const getUser = async (userId: string) => {
+  try {
+    const user = await users.get(userId);
+
+    return JSON.parse(JSON.stringify(user))
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the user details:",
+      error
+    );
+  }
+};
+
+export const registerPatient = async (patient : RegisterUserParams) => {
+  try {
+    
+    const newPatient = await databases.createDocument(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      ID.unique(),      
+      patient,
+    );
+
+    return JSON.parse(JSON.stringify(newPatient))
+  } catch (error) {
+    console.error("An error occurred while creating a new patient:", error);
   }
 };

@@ -16,7 +16,7 @@ const Home = ({ searchParams }: SearchParamProps) => {
     <div className="flex h-screen max-h-screen">
       {isAdmin && <PasskeyModal />}
 
-      <section className="remove-scrollbar container my-auto">
+      <section className="remove-scrollbar container my-auto md:w-1/2 lg:w-1/3">
         <div className="sub-container max-w-[496px]">
           <h1 className="text-xl font-bold text-dark-800 mb-10">
           <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
@@ -37,11 +37,11 @@ const Home = ({ searchParams }: SearchParamProps) => {
       </section>
 
       <Image
-        src="/assets/images/onboarding-img.png"
+        src="/assets/images/register-img.png"
         height={1000}
         width={1000}
         alt="patient"
-        className="side-img max-w-[50%]"
+        className="xs:hidden md:block side-img max-w-[50%]"
       />
     </div>
   );

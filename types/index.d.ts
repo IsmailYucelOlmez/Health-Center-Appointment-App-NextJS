@@ -1,4 +1,4 @@
-declare type Gender = "Male" | "Female" | "Other";
+declare type Gender = "male" | "female" | "other";
 declare type Status = "pending" | "scheduled" | "cancelled";
 
 declare interface CreateUserParams {
@@ -8,4 +8,10 @@ declare interface CreateUserParams {
 }
 declare interface User extends CreateUserParams {
   $id: string;
+}
+
+declare interface RegisterUserParams extends CreateUserParams {
+  userId: string;
+  gender: Gender;
+  privacyConsent: boolean;
 }

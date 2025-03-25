@@ -80,7 +80,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <PhoneInput
-            defaultCountry="US"
+            defaultCountry="TR"
             placeholder={props.placeholder}
             international
             withCountryCallingCode
@@ -93,13 +93,14 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ">
             <Checkbox
               id={props.name}
               checked={field.value}
               onCheckedChange={field.onChange}
+              className="dark:border dark:border-white"
             />
-            <label htmlFor={props.name} className="checkbox-label">
+            <label htmlFor={props.name} className="checkbox-label text-sm">
               {props.label}
             </label>
           </div>

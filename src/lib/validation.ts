@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 export const UserFormValidation = z.object({
-  name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters"),
+  name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be at most 50 characters"),
   email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  phone: z.string().refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  privacyConsent: z.boolean().default(false).refine((value) => value === true, {
+    message: "You must consent to privacy in order to proceed",
+  }),
+  gender: z.enum(["male", "female", "other"]),
 });
 
 export const PatientFormValidation = z.object({
@@ -20,7 +19,7 @@ export const PatientFormValidation = z.object({
   phone: z
     .string()
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
-  gender: z.enum(["Male", "Female", "Other"]),
+  gender: z.enum(["male", "female", "other"]),
   primaryPhysician: z.string().min(2, "Select at least one doctor"),
   currentMedication: z.string().optional(),
   identificationType: z.string().optional(),
