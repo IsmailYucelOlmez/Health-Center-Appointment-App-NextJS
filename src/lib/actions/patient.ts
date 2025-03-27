@@ -11,6 +11,7 @@ import {
   //storage,
   users,
 } from "../appwrite.config";
+import { CreateUserParams, RegisterUserParams } from "../../../types";
 
 
 export const createUser = async (user: CreateUserParams) => {
@@ -64,5 +65,22 @@ export const registerPatient = async (patient : RegisterUserParams) => {
     return JSON.parse(JSON.stringify(newPatient))
   } catch (error) {
     console.error("An error occurred while creating a new patient:", error);
+  }
+};
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return  JSON.parse(JSON.stringify(patients.documents[0]))
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the patient details:",
+      error
+    );
   }
 };
