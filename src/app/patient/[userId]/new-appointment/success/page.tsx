@@ -7,11 +7,8 @@ import { getAppointment } from "@/lib/actions/appointment";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "../../../../../../types";
 
-const RequestSuccess = async ({
-  searchParams,
-  params: { userId },
-}: SearchParamProps) => {
-  const appointmentId = (searchParams?.appointmentId as string) || "";
+const RequestSuccess = async ({ searchParams, params: { userId },}: SearchParamProps) => {
+  const appointmentId =await (searchParams?.appointmentId as string) || "";
   const appointment = await getAppointment(appointmentId);
 
   const doctor = Doctors.find(
@@ -19,16 +16,12 @@ const RequestSuccess = async ({
   );
 
   return (
-    <div className=" flex h-screen max-h-screen px-[5%]">
-      <div className="success-img">
+    <div className=" flex h-screen max-h-screen px-[5%] justify-center items-center">
+      <div className="success-img flex flex-col justify-center gap-8">
         <Link href="/">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="logo"
-            className="h-10 w-fit"
-          />
+          <h1 className="text-xl font-bold text-dark-800 mb-10">
+            <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
+          </h1>
         </Link>
 
         <section className="flex flex-col items-center">
@@ -38,16 +31,21 @@ const RequestSuccess = async ({
             width={280}
             alt="success"
           />
-          <h2 className="header mb-6 max-w-[600px] text-center">
-            Your <span className="text-green-500">appointment request</span> has
-            been successfully submitted!
+          <h2 className="header mt-6 mb-2 max-w-[600px] text-center text-lg font-semibold">
+          <span className="text-green-500">Randevu </span>isteğiniz gönderilmiştir
           </h2>
-          <p>We&apos;ll be in touch shortly to confirm.</p>
+          <p className="text-sm">İlerleyen dakikalarda onaylanacaktır</p>
         </section>
 
-        <section className="request-details">
-          <p>Requested appointment details: </p>
+        <section className="flex flex-col justify-center gap-2">
+          <p className="text-sm">Randevu Detayları</p>
           <div className="flex items-center gap-3">
+            <Image
+              src="/assets/icons/user.svg"
+              height={24}
+              width={24}
+              alt="user"
+            />
             <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
           </div>
           <div className="flex gap-2">
@@ -63,11 +61,10 @@ const RequestSuccess = async ({
 
         <Button variant="outline" className="shad-primary-btn" asChild>
           <Link href={`/patients/${userId}/new-appointment`}>
-            New Appointment
+            Yeni Randevu
           </Link>
         </Button>
 
-        <p className="copyright">© 2024 CarePluse</p>
       </div>
     </div>
   );

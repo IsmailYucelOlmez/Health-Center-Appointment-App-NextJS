@@ -16,6 +16,7 @@ import {
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import { tr } from 'date-fns/locale'
 
 export enum FormFieldType {
   INPUT = "input",
@@ -108,24 +109,36 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.DATE_PICKER:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
-          <Image
-            src="/assets/icons/calendar.svg"
-            height={24}
-            width={24}
-            alt="user"
-            className="ml-2"
-          />
-          <FormControl>
-            <ReactDatePicker
-              showTimeSelect={props.showTimeSelect ?? false}
-              selected={field.value}
-              onChange={(date: Date | null) => field.onChange(date)}
-              timeInputLabel="Time:"
-              dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
-              wrapperClassName="date-picker"
+        <div className="flex flex-col gap-3 rounded-md border border-dark-500 bg-dark-400">
+          <div className="flex">
+            <Image
+              src="/assets/icons/calendar.svg"
+              height={24}
+              width={24}
+              alt="user"
+              className="ml-2"
             />
-          </FormControl>
+            <FormControl>
+              <ReactDatePicker
+                showTimeSelect={props.showTimeSelect ?? false}
+                selected={field.value}
+                onChange={(date: Date | null) => field.onChange(date)}
+                timeInputLabel="Time:"
+                dateFormat={props.dateFormat ?? "dd/MM/yyyy"}
+                wrapperClassName="date-picker"
+                filterDate={(date) => date.getDay() == 2}
+                locale={tr}
+                timeIntervals={10}
+                filterTime={(time) => {
+                  const hour = time.getHours();
+                  return hour >= 9 && hour <= 14;
+                }}
+              />
+            
+            </FormControl>
+          </div>
+          
+          <FormMessage className="text-white text-xs" >*sadece salı 9.00 ile 15.00 arasında randevu alınabilmektedir</FormMessage>
         </div>
       );
     case FormFieldType.SELECT:

@@ -27,7 +27,7 @@ export const AppointmentForm = ({
 }: {
   userId: string;
   patientId: string;
-  type: "create" | "schedule" | "cancel";
+  type: "create" | "scheduled" | "cancel";
   appointment?: Appointment;
   setOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -48,14 +48,12 @@ export const AppointmentForm = ({
     },
   });
 
-  const onSubmit = async (
-    values: z.infer<typeof AppointmentFormValidation>
-  ) => {
+  const onSubmit = async ( values: z.infer<typeof AppointmentFormValidation> ) => {
     setIsLoading(true);
 
     let status;
     switch (type) {
-      case "schedule":
+      case "scheduled":
         status = "scheduled";
         break;
       case "cancel":
@@ -76,11 +74,11 @@ export const AppointmentForm = ({
         };
 
         const newAppointment = await createAppointment(appointment);
-
+        
         if (newAppointment) {
           form.reset();
           router.push(
-            `/patients/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`
+            `/patient/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`
           );
         }
       } else {
@@ -96,7 +94,7 @@ export const AppointmentForm = ({
             patient: appointment?.patient,
             userId: userId,
           },
-          type,
+          type:type,
         };
 
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
@@ -115,13 +113,13 @@ export const AppointmentForm = ({
   let buttonLabel;
   switch (type) {
     case "cancel":
-      buttonLabel = "Cancel Appointment";
+      buttonLabel = "Randevuyu İptal Et";
       break;
-    case "schedule":
-      buttonLabel = "Schedule Appointment";
+    case "scheduled":
+      buttonLabel = "Randevu Onayla";
       break;
     default:
-      buttonLabel = "Submit Apppointment";
+      buttonLabel = "Randevu İsteği Oluştur";
   }
 
   return (
@@ -137,8 +135,8 @@ export const AppointmentForm = ({
               fieldType={FormFieldType.SELECT}
               control={form.control}
               name="primaryPhysician"
-              label="Doctor"
-              placeholder="Select a doctor"
+              label="Doktor"
+              placeholder="Doktor Seçin"
             >
               {Doctors.map((doctor, i) => (
                 <SelectItem key={doctor.name + i} value={doctor.name}>
@@ -153,9 +151,9 @@ export const AppointmentForm = ({
               fieldType={FormFieldType.DATE_PICKER}
               control={form.control}
               name="schedule"
-              label="Expected appointment date"
+              label="Tarih"
               showTimeSelect
-              dateFormat="MM/dd/yyyy  -  h:mm aa"
+              dateFormat="dd/MM/yyyy  -  h:mm aa"
             />
 
           </>
@@ -173,7 +171,7 @@ export const AppointmentForm = ({
 
         <SubmitButton
           isLoading={isLoading}
-          className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
+          className={`${type === "cancel" ? "bg-red-700 text-white" : "bg-green-500 text-white"} w-full`}
         >
           {buttonLabel}
         </SubmitButton>
