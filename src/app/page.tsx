@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import PasskeyModal from "@/components/PassKeyModal";
 import { PatientForm } from "@/components/forms/PatientForm";
+import { useState } from "react";
+import { LoginForm } from "@/components/forms/LoginForm";
 
 type SearchParamProps = {
   searchParams: {
@@ -11,6 +14,8 @@ type SearchParamProps = {
 
 const Home = ({ searchParams }: SearchParamProps) => {
   const isAdmin = searchParams?.admin === "true";
+
+  const [isLogin,setIsLogin]=useState(true);
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -22,8 +27,13 @@ const Home = ({ searchParams }: SearchParamProps) => {
           <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
           </h1>
           
+          {isLogin ? (
+              <LoginForm setIsLogin={setIsLogin}/>
+          ):(
+              <PatientForm setIsLogin={setIsLogin} />
+          )}
 
-          <PatientForm />
+          
 
           <div className="text-14-regular mt-20 flex justify-between">
             <p></p>

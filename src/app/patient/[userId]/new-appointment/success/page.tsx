@@ -59,7 +59,7 @@ const RequestSuccess = async ({ searchParams, params: { userId },}: SearchParamP
           </div>
         </section>
 
-        <Button variant="outline" className="shad-primary-btn" asChild>
+        <Button  className="bg-green-500 text-white hover:text-slate-700" asChild>
           <Link href={`/patients/${userId}/new-appointment`}>
             Yeni Randevu
           </Link>

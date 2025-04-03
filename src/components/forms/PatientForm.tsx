@@ -17,7 +17,11 @@ import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { GenderOptions } from "@/lib/constants";
 
-export const PatientForm = () => {
+interface LoginFormProps {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const PatientForm = ({ setIsLogin }: LoginFormProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -130,6 +134,9 @@ export const PatientForm = () => {
           />
 
         <SubmitButton isLoading={isLoading}>Kayıt Ol</SubmitButton>
+
+        <button onClick={()=>setIsLogin((prev)=>!prev)} className="text-sm cursor-pointer">Zaten Hesabın Var mı ? <span className="font-semibold underline">Giriş Yap</span></button>
+   
       </form>
     </Form>
   );
