@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { SearchParamProps } from "../../../../../types";
 import { getPatient } from "@/lib/actions/patient";
+import Link from "next/link";
 
 const NewAppointment = async ({ params }: SearchParamProps) => {
   
@@ -13,9 +14,11 @@ const NewAppointment = async ({ params }: SearchParamProps) => {
     <div className="flex justify-between h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[860px] flex-1 justify-between">
+          <Link href="/">
           <h1 className="text-xl font-bold text-dark-800 mb-10">
             <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
           </h1>
+          </Link>
 
           <AppointmentForm
             patientId={patient?.$id}

@@ -5,6 +5,8 @@ import PasskeyModal from "@/components/PassKeyModal";
 import { PatientForm } from "@/components/forms/PatientForm";
 import { useState } from "react";
 import { LoginForm } from "@/components/forms/LoginForm";
+import React from "react";
+import { Search } from "lucide-react";
 
 type SearchParamProps = {
   searchParams: {
@@ -13,7 +15,9 @@ type SearchParamProps = {
 };
 
 const Home = ({ searchParams }: SearchParamProps) => {
-  const isAdmin = searchParams?.admin === "true";
+  
+  const { admin } = searchParams
+  const isAdmin = admin === "true";
 
   const [isLogin,setIsLogin]=useState(true);
 
