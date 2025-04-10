@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
@@ -18,31 +18,21 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { decryptKey, encryptKey } from "@/lib/utils";
 
-const PasskeyModal = () => {
+interface PasskeyModalProps {
+  adminModalOpen: boolean;
+}
+
+const PasskeyModal = ({ adminModalOpen }: PasskeyModalProps) => {
   const router = useRouter();
-  const path = usePathname();
   const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
-  const encryptedKey =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("accessKey")
-      : null;
-
   useEffect(() => {
-    const accessKey = encryptedKey && decryptKey(encryptedKey);
-
-    if (path)
-      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
-        setOpen(false);
-        router.push("/admin");
-      } else {
-        setOpen(true);
-      }
-  }, [encryptedKey]);
+    setOpen(adminModalOpen);
+  }
+  , [adminModalOpen]);
 
   const closeModal = () => {
     setOpen(false);
@@ -53,11 +43,11 @@ const PasskeyModal = () => {
     e.preventDefault();
 
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-      const encryptedKey = encryptKey(passkey);
-
-      localStorage.setItem("accessKey", encryptedKey);
-
+    
       setOpen(false);
+      router.push("/admin");
+      
+
     } else {
       setError("Invalid passkey. Please try again.");
     }

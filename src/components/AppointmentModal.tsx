@@ -35,11 +35,8 @@ export const AppointmentModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          className={`capitalize ${type === "scheduled" && "text-green-500"}`}
-        >
-          {type=="cancel" ? type : "Schedule"}
+        <Button variant="ghost" className={`capitalize ${type === "scheduled" && "text-green-500 border border-green-500"} ${type === "cancel" && "border border-white"}`} >
+          {type=="cancel" ? 'İptal Et' : "Onayla"}
         </Button>
       </DialogTrigger>
       <DialogContent className="shad-dialog sm:max-w-md">

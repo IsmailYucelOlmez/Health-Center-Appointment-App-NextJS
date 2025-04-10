@@ -47,6 +47,32 @@ export const getMyAppointments=async(userId:string)=>{
   }
 }
 
+export const getTodayAppointments=async()=>{
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+    
+    const todayAppointments = await databases.listDocuments(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      [
+        Query.greaterThanEqual("schedule", startOfDay.toISOString()),
+        Query.lessThanEqual("schedule", endOfDay.toISOString()),
+        Query.orderAsc("schedule"),
+      ]
+    );
+
+    return JSON.parse(JSON.stringify(todayAppointments))
+
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the recent appointments:",
+      error
+    );
+  }
+}
+
 //  GET RECENT APPOINTMENTS
 export const getRecentAppointmentList = async () => {
   try {

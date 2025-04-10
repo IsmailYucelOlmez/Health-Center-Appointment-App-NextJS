@@ -12,18 +12,20 @@ const AdminPage = async () => {
   return (
     <div className="mx-auto flex justify-center max-w-7xl flex-col space-y-14">
       <header className="sticky top-3 z-20 mx-3 flex items-center justify-between gap-6 rounded-2xl bg-dark-200 px-[5%] py-5 mb-10 shadow-lg xl:px-12">
-            <div className='flex justify-start items-center gap-6'>
-              <Link href="/">
-                <h1 className="text-xl font-bold text-dark-800">
-                    <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
-                </h1>
-              </Link>
-                <p className="text-16-semibold">Admin Panel</p>
-            </div>
+        <div className='flex justify-start items-center gap-6'>
+          <Link href="/">
+            <h1 className="text-xl font-bold text-dark-800">
+              <span className="text-green-500">Sağlık Merkezi</span> Randevu Sistemi
+            </h1>
+          </Link>
+          <p className="text-16-semibold">Admin Panel</p>
+        </div>
 
-            <Button  className="bg-green-500 text-white hover:text-slate-700" asChild>
-                <Link href={``}> Today&apos;s Appointment Flow</Link>
-            </Button>
+        <Link href="/admin/appointment-flow">
+          <Button variant={'outline'} className="hover:bg-gray-300">
+            Today&apos;s Appointment Flow
+          </Button>
+        </Link>
       </header>
 
       <main className="flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12">      
